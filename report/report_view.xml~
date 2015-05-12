@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+     	<report auto="False" 
+            id="square_feet_report_id" 
+            model="century.workorder" 
+            name="century.workorder.report" 
+            rml="work_order_sq_ft_report/report/square_feet.rml" 
+            string="Square Feet Report"
+            header="True"/>
+    </data>
+   
+</openerp>

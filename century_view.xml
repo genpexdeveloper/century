@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Top menu item -->
+        <menuitem name="Century" id="century_main"
+                groups="base.group_user"/>
+        <!-- Left menu -->
+        <menuitem name="Century" parent="century_main" id="century_header"/>
+        <menuitem name="Settings" parent="century_main" id="century_settings"/>
+
+        <!-- Job -->
+        <record model="ir.ui.view" id="action_century_job_form_view">
+            <field name="name">Job</field>
+            <field name="model">century.job</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Job" version="7.0">
+		<sheet>
+		<div class="oe_title">
+		  <h1>
+		    <field name="name" default_focus="1" placeholder="Name"/>
+		  </h1>
+		</div>
+		<div class="oe_right oe_button_box" name="buttons">
+            	  <button name="open_map" string="Google Maps" type="object"/>
+		</div>
+                <group col='4'>
+                  <field name="planner_id"/>
+		  <newline/>
+                  <field name="customer_id"/>
+		  <newline/>
+                  <label for="street" string="Address"/>
+                  <div>
+                        <field name="street" placeholder="Street..."/>
+                        <field name="street2"/>
+                        <div class="address_format">
+                            <field name="city" placeholder="City" style="width: 40%%"/>
+                            <field name="state_id" on_change="onchange_state(state_id)" options='{"no_open": True}' placeholder="State" style="width: 24%%"/>
+                            <field name="zip" placeholder="ZIP" style="width: 34%%"/>
+                        </div>
+                        <field name="country_id" placeholder="Country" options='{"no_open": True}'/>
+                  </div>
+		  <newline/>
+                  <field name="phone"/>
+                  <field name="fax"/>
+                </group>
+                <notebook>
+                  <page string="Work Orders">
+                    <field name="workorders" widget="one2many_list"/>
+                  </page>
+                </notebook>
+		</sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="action_century_job_tree_view">
+            <field name="name">Job</field>
+            <field name="model">century.job</field>
+            <field name="arch" type="xml">
+                <tree string="Job">
+                  <field name="name"/>
+                  <field name="street"/>
+                  <field name="street2"/>
+                  <field name="city"/>
+                  <field name="state_id"/>
+                  <field name="zip"/>
+                  <field name="customer_id"/>
+                  <field name="planner_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_century_job_form">
+            <field name="name">Job</field>
+            <field name="res_model">century.job</field>
+        </record>
+<!--  NOTE: the following does not work...
+        <menuitem name="Customers" parent="century_header" id="century_partner_menu_mainform" action="res.partner.action_partner_form" sequence='0'/>
+-->
+        <menuitem name="Jobs" parent="century_header" id="century_job_menu_mainform" action="action_century_job_form" sequence='0'/>
+
+        <!-- Stone -->
+        <record model="ir.ui.view" id="action_century_stone_form_view">
+            <field name="name">Stone</field>
+            <field name="model">century.stone</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Stone" version="7.0">
+                <group>
+                  <field name="name"/>
+		  <newline/>
+                  <field name="level"/>
+                  <field name="plan_price"/>
+                </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="action_century_stone_tree_view">
+            <field name="name">Stone</field>
+            <field name="model">century.stone</field>
+            <field name="arch" type="xml">
+                <tree string="Stone">
+                  <field name="name"/>
+                  <field name="level"/>
+                  <field name="plan_price"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_century_stone_form">
+            <field name="name">Stone</field>
+            <field name="res_model">century.stone</field>
+        </record>
+
+        <menuitem name="Stones" parent="century_settings" id="century_stone_menu_mainform" action="action_century_stone_form" sequence='0'/>
+
+        <!-- Locations -->
+        <record model="ir.ui.view" id="action_century_workorder_location_form_view">
+            <field name="name">Work Order Location</field>
+            <field name="model">century.workorder.location</field>
+            <field name="type">form</field>
+        </record>
+        <record model="ir.ui.view" id="action_century_workorder_location_tree_view">
+            <field name="name">Work Order Location</field>
+            <field name="model">century.workorder.location</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_century_workorder_location_form">
+            <field name="name">Work Order Location</field>
+            <field name="res_model">century.workorder.location</field>
+        </record>
+
+        <menuitem name="Work Order Locations" parent="century_settings" id="century_workorder_location_menu_mainform" action="action_century_workorder_location_form" sequence='0'/>
+
+        <!-- Edge -->
+        <record model="ir.ui.view" id="action_century_workorder_edge_form_view">
+            <field name="name">Work Order Edge</field>
+            <field name="model">century.workorder.edge</field>
+            <field name="type">form</field>
+        </record>
+        <record model="ir.ui.view" id="action_century_workorder_edge_tree_view">
+            <field name="name">Work Order Edge</field>
+            <field name="model">century.workorder.edge</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_century_workorder_edge_form">
+            <field name="name">Work Order Edge</field>
+            <field name="res_model">century.workorder.edge</field>
+        </record>
+
+        <menuitem name="Edges" parent="century_settings" id="century_workorder_edge_menu_mainform" action="action_century_workorder_edge_form" sequence='0'/>
+
+        <!-- Backsplash -->
+        <record model="ir.ui.view" id="action_century_workorder_backsplash_form_view">
+            <field name="name">Work Order Backsplash</field>
+            <field name="model">century.workorder.backsplash</field>
+            <field name="type">form</field>
+        </record>
+        <record model="ir.ui.view" id="action_century_workorder_backsplash_tree_view">
+            <field name="name">Work Order Backsplash</field>
+            <field name="model">century.workorder.backsplash</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_century_workorder_backsplash_form">
+            <field name="name">Work Order Backsplash</field>
+            <field name="res_model">century.workorder.backsplash</field>
+        </record>
+
+        <menuitem name="Backsplashes" parent="century_settings" id="century_workorder_backsplash_menu_mainform" action="action_century_workorder_backsplash_form" sequence='0'/>
+
+        <!-- Sink -->
+        <record model="ir.ui.view" id="action_century_workorder_sink_form_view">
+            <field name="name">Work Order Sink</field>
+            <field name="model">century.workorder.sink</field>
+            <field name="type">form</field>
+        </record>
+        <record model="ir.ui.view" id="action_century_workorder_sink_tree_view">
+            <field name="name">Work Order Sink</field>
+            <field name="model">century.workorder.sink</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_century_workorder_sink_form">
+            <field name="name">Work Order Sink</field>
+            <field name="res_model">century.workorder.sink</field>
+        </record>
+
+        <menuitem name="Sinks" parent="century_settings" id="century_workorder_sink_menu_mainform" action="action_century_workorder_sink_form" sequence='0'/>
+
+        <!-- Schedule Activity Type -->
+<!--
+        <record model="ir.ui.view" id="action_century_workorder_scheduleactivity_type_form_view">
+            <field name="name">Work Order Schedule Activity Type</field>
+            <field name="model">century.workorder.scheduleactivity.type</field>
+            <field name="type">form</field>
+        </record>
+        <record model="ir.ui.view" id="action_century_workorder_scheduleactivity_type_tree_view">
+            <field name="name">Work Order Schedule Activity Type</field>
+            <field name="model">century.workorder.scheduleactivity.type</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_century_workorder_scheduleactivity_type_form">
+            <field name="name">Work Order Schedule Activity Type</field>
+            <field name="res_model">century.workorder.scheduleactivity.type</field>
+        </record>
+
+        <menuitem name="Schedule Activity Types" parent="century_settings" id="century_workorder_scheduleactivity_type_menu_mainform" action="action_century_workorder_scheduleactivity_type_form" sequence='0'/>
+
+-->
+        <!-- Crew -->
+        <record model="ir.ui.view" id="action_century_workorder_crew_form_view">
+            <field name="name">Work Order Crew</field>
+            <field name="model">century.workorder.crew</field>
+            <field name="arch" type="xml">
+                <form string="Crew" version="7.0">
+                <group>
+                  <field name="name"/>
+                  <field name="activity_type"/>
+                </group>
+<!--
+                <notebook>
+                  <page string="Schedule Activity Types">
+                    <field name="scheduleactivity_types" widget="many2many_list"/>
+                  </page>
+                </notebook>
+-->
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="action_century_workorder_crew_tree_view">
+            <field name="name">Work Order Crew</field>
+            <field name="model">century.workorder.crew</field>
+            <field name="arch" type="xml">
+                <tree string="Crew">
+                  <field name="name"/>
+                  <field name="activity_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_century_workorder_crew_form">
+            <field name="name">Work Order Crew</field>
+            <field name="res_model">century.workorder.crew</field>
+        </record>
+
+        <menuitem name="Crews" parent="century_settings" id="century_workorder_crew_menu_mainform" action="action_century_workorder_crew_form" sequence='0'/>
+
+	<!-- Work Order Sequence Number -->
+	<record id="seq_type_library_century_workorder" model="ir.sequence.type">
+	  <field name="name">Work Order</field>
+	  <field name="code">century.workorder</field>
+	</record>
+	<record id="seq_century_workorder" model="ir.sequence">
+            <field name="name">Work Order</field>
+            <field name="code">century.workorder</field>
+            <field name="prefix">WO-</field>
+            <field name="padding">5</field>
+        </record>
+        <!-- Work Order -->
+        <record model="ir.ui.view" id="action_century_workorder_form_view">
+            <field name="name">Work Order</field>
+            <field name="model">century.workorder</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Work Order" version="7.0">
+                <group col='4'>
+                    <field name="name" attrs="{'readonly':True}"/>
+                    <field name="job_id"/>
+                    <field name="type"/>
+		    <newline/>
+
+                    <field name="location_id"/>
+                    <field name="thickness"/>
+                    <field name="stone_id"/>
+                    <field name="sq_ft"/>
+
+		    <newline/>
+		    <newline/>
+                    <field name="edge_id"/>
+                    <field name="backsplash_id"/>
+
+                    <field name="sink_id"/>
+                    <field name="num_sinks"/>
+		    <newline/>
+                    <field name="demo"/>
+                </group>
+		<group>
+                    <field name="special_instructions"/>
+                </group>
+                <notebook>
+                  <page string="Schedule Activities">
+                    <field name="scheduleactivities" widget="one2many_list"/>
+                  </page>
+                </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="action_century_workorder_tree_view">
+            <field name="name">Work Order</field>
+            <field name="model">century.workorder</field>
+            <field name="arch" type="xml">
+                <tree string="Work Order">
+                  <field name="name"/>
+                  <field name="job_id"/>
+                  <field name="location_id"/>
+                  <field name="sq_ft"/>
+                  <field name="stone_id"/>
+                  <field name="thickness"/>
+                  <field name="edge_id"/>
+                  <field name="sink_id"/>
+                  <field name="num_sinks"/>
+<!--
+                  <field name="backsplash_id"/>
+                  <field name="demo"/>
+                  <field name="special_instructions"/>
+-->
+                  <field name="type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_century_workorder_form">
+            <field name="name">Work Order</field>
+            <field name="res_model">century.workorder</field>
+        </record>
+
+        <menuitem name="Work Orders" parent="century_header" id="century_workorder_menu_mainform" action="action_century_workorder_form" sequence='0'/>
+
+	<!-- Schedule Activity States -->
+	<record id="century_sa_state_needs_scheduling" model="century.workorder.scheduleactivity.state">
+	    <field name="sequence">1</field>
+	    <field name="name">TODO</field>
+	</record>
+	<record id="century_sa_state_mon" model="century.workorder.scheduleactivity.state">
+	    <field name="sequence">2</field>
+	    <field name="name">Mon</field>
+	</record>
+	<record id="century_sa_state_tue" model="century.workorder.scheduleactivity.state">
+	    <field name="sequence">2</field>
+	    <field name="name">Tue</field>
+	</record>
+	<record id="century_sa_state_wed" model="century.workorder.scheduleactivity.state">
+	    <field name="sequence">2</field>
+	    <field name="name">Wed</field>
+	</record>
+	<record id="century_sa_state_thu" model="century.workorder.scheduleactivity.state">
+	    <field name="sequence">2</field>
+	    <field name="name">Thu</field>
+	</record>
+	<record id="century_sa_state_fri" model="century.workorder.scheduleactivity.state">
+	    <field name="sequence">2</field>
+	    <field name="name">Friday</field>
+	</record>
+	<record id="century_sa_state_future" model="century.workorder.scheduleactivity.state">
+	    <field name="sequence">2</field>
+	    <field name="name">Future</field>
+	</record>
+
+        <!-- Schedule Activity -->
+        <record model="ir.ui.view" id="action_century_workorder_scheduleactivity_form_view">
+            <field name="name">Work Order Schedule Activity</field>
+            <field name="model">century.workorder.scheduleactivity</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Schedule Activity" version="7.0">
+                	<header>
+						<field name="scheduling_state_id" widget="statusbar" clickable="True" />
+					</header>
+		            <group>
+			  			<group>
+				            <field name="workorder_id"/>
+				            <field name="type"/>
+							<!--<field name="name"/>-->
+				            <field name="crew"/>
+				            <field name="scheduling_state_id"/>
+			  			</group>
+			  			<group>
+						        <field name="date"/>
+						        <field name="hour"/>
+						        <field name="minute"/>
+						        <field name="duration"/>
+					  	</group>
+		            </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="action_century_workorder_scheduleactivity_tree_view">
+            <field name="name">Work Order Schedule Activity</field>
+            <field name="model">century.workorder.scheduleactivity</field>
+            <field name="arch" type="xml">
+                <tree string="Schedule Activity">
+                  <field name="workorder_id"/>
+                  <field name="name"/>
+                  <field name="crew"/>
+                  <field name="datetime"/>
+<!--
+                  <field name="date"/>
+                  <field name="hour"/>
+                  <field name="minute"/>
+                  <field name="duration"/>
+-->
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="action_century_workorder_scheduleactivity_calendar_view">
+            <field name="name">Work Order Schedule Activity</field>
+            <field name="model">century.workorder.scheduleactivity</field>
+            <field name="arch" type="xml">
+                <calendar version="7.0" color="type" date_start="datetime" date_delay="duration_float" string="Schedule Activities">
+	  		<field name="job_id"/>
+	  		<field name="sq_ft"/>
+<!--
+	  		<field name="workorder_id.job_id"/>
+	  		<field name="workorder_id.sq_ft"/>
+-->
+		</calendar>
+    	    </field>
+	</record>
+        <record model="ir.ui.view" id="action_century_workorder_scheduleactivity_kanban_view">
+            <field name="name">Work Order Schedule Activity</field>
+            <field name="model">century.workorder.scheduleactivity</field>
+            <field name="type">kanban</field>
+            <field name="arch" type="xml">
+		<kanban create="false" default_group_by="scheduling_state_id">
+		  <field name="name"/>
+		  <field name="crew"/>
+		  <field name="datetime"/>
+		  <field name="workorder_id"/>
+		  <templates>
+			<t t-name="kanban-box">
+			  <div class="oe_kanban_color_0 oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+				<div><field name="workorder_id"/> <field name="name"/> SF:<field name="sq_ft"/></div>
+				<div><field name="job_id"/></div>
+				<div><field name="stone_id"/>, <field name="edge_id"/>, <field name="sink_id"/></div>
+				<div><i><field name="crew"/></i></div>
+				<div><field name="datetime"/></div>
+                            </div>
+			  </div>
+			</t>
+		  </templates>
+		</kanban>
+    	    </field>
+	</record>
+
+        <record model="ir.actions.act_window" id="action_century_workorder_scheduleactivity_form">
+            <field name="name">Work Order Schedule Activity</field>
+            <field name="res_model">century.workorder.scheduleactivity</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,kanban,tree,form</field>
+        </record>
+        <menuitem name="Schedule Activities" parent="century_header" id="century_workorder_scheduleactivity_menu_mainform" action="action_century_workorder_scheduleactivity_form" sequence='0'/>
+
+<record model="ir.ui.view" id="view_partner_form_googlemaps">
+    <field name="name">res.partner.form.googlemaps</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//sheet/div[@name='buttons']" position="inside">
+            <button name="open_map" string="Google Maps" type="object"/>
+        </xpath>
+    </field>
+</record>
+
+    </data>
+</openerp>
+

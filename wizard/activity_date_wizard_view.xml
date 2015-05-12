@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_activity_date_wizard" model="ir.ui.view">
+            <field name="name">activity.date.wizard.view</field>
+            <field name="model">activity.date.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Total Activity Sqft" version="7.0">
+                    <group>
+                        <field name="start_date" class="oe_inline" />
+                        <field name="end_date" class="oe_inline"/>
+                    </group>                  
+                    <footer>
+                        <button string="Print" name="print_report" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+               </form>
+            </field>
+        </record>
+        
+        <record id="action_activity_date_wizard" model="ir.actions.act_window">
+            <field name="name">Total Activity Sqft</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">activity.date.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_activity_date_wizard"/>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+        
+       	<menuitem action="action_activity_date_wizard" id="activity_date_wizard_id" parent="century.century_header" 
+       		name="Total Activity Sqft" />        	
+
+    </data>
+</openerp>

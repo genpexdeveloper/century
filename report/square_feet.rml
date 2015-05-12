@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+	<pageTemplate>
+		<frame id="first" x1="1.3cm" y1="5.0cm" height="22.0cm" width="19.0cm"/>
+		<stylesheet> <!-- Set here the default font to use for all <para> tags --> 
+			<paraStyle name='Normal' fontName="DejaVu Sans"/>
+            <paraStyle name="main_footer" fontSize="7.0" alignment="RIGHT"/>
+            <paraStyle name="main_footer1" fontSize="6.0" alignment="LEFT"/>
+            <paraStyle name="company_name" fontSize="16.0" alignment="CENTER"/>
+            <paraStyle name="company_address" fontSize="8.0" alignment="CENTER"/>
+            <paraStyle name="main_header" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/> 
+		</stylesheet> 
+	</pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+    </blockTableStyle>
+    
+    <blockTableStyle id="Table42">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="3,-1" stop="3,-1"/>
+    </blockTableStyle>
+    
+    <blockTableStyle id="Table43">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,-1" stop="3,-1"/>
+    </blockTableStyle>
+    
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="8.0" leading="20" alignment="CENTER"/>
+    <paraStyle name="P18" fontName="Helvetica" fontSize="8.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P2" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT"/>
+    <paraStyle name="P4" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P41" fontName="Helvetica-Bold" fontSize="11.0" leading="20" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Helvetica" alignment="LEFT" fontSize="9.0" leading="11"/>
+    <paraStyle name="P17" fontName="Helvetica" alignment="LEFT" fontSize="8.0" leading="11"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="10.0" leading="13" alignment="RIGHT"/>
+    <paraStyle name="P61" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P7" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P9" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <images/>
+  </stylesheet>
+  <story>
+  	<pto>
+      	<pto_header>
+      		<blockTable colWidths="135.0,200.0,135.0,70.0" style="Table4">
+			  	<tr>
+			  		<td><para style="P4"><font color="white">.</font> Activity</para></td>
+			  		<td><para style="P4"><font color="white">.</font> Job</para></td>
+			  		<td><para style="P4"><font color="white">.</font> WorkOrder No</para></td>
+			  		<td><para style="P6"><font color="white">.</font> <b>SqFt</b></para></td>
+			  	</tr>
+		  	</blockTable>
+      	</pto_header>
+  	<para style="P41">Total Activity Sqft</para>
+  	<para style="P1"><b>From</b> [[ data['form']['start_date'] ]] <b>to</b> [[ data['form']['end_date'] ]]</para>
+  	<blockTable colWidths="270.0,270.0" style="Table4">
+	  	<tr>
+	  		<td><para style="P4">Activity</para></td>
+	  		<td><para style="P6">SqFt</para></td>
+	  	</tr>
+  	</blockTable>
+  	<section>
+  		<para style="P9">[[ repeatIn( set_location_sqft(data['form']),'vals') ]]</para>
+  		<blockTable colWidths="270.0,270.0" style="Table42">
+  			<tr>
+  				<td><para style="P61">[[ vals.keys()[0] or ' ' ]]</para></td>
+  				<td><para style="P6">[[ vals[vals.keys()[0] or '0.00' ] ]]</para></td>
+  			</tr>
+  		</blockTable>
+  	</section>
+  	<blockTable colWidths="270.0,270.0" style="Table43">
+		<tr>
+			<td><para style="P61"><b>Total Activity Sqft</b></para></td>
+			<td><para style="P6"><b>[[ get_sqft_total() ]] </b></para></td>
+		</tr>
+	</blockTable>
+	
+	<para style="P41"><font color="white">.</font></para>
+	<para style="P41">[1] Template</para>
+	<blockTable colWidths="135.0,200.0,135.0,70.0" style="Table4">
+	  	<tr>
+	  		<td><para style="P4">Activity</para></td>
+	  		<td><para style="P4">Job</para></td>
+	  		<td><para style="P4">WorkOrder No</para></td>
+	  		<td><para style="P6"><b>SqFt</b></para></td>
+	  	</tr>
+  	</blockTable>
+  	<section>
+  		<para style="P9">[[ repeatIn( get_template_activity(data['form'],"Template"),'tem') ]]</para>
+  		<blockTable colWidths="135.0,200.0,135.0,70.0" style="Table4">
+  			<tr>
+  				<td><para style="P61">[[ tem.type or ' ' ]]</para></td>
+  				<td><para style="P61">[[ tem.workorder_id.job_id.name or ' ' ]]</para></td>
+  				<td><para style="P61">[[ tem.workorder_id.name or ' ' ]]</para></td>
+  				<td><para style="P6">[[ tem.workorder_id.sq_ft or ' ' ]]</para></td>
+  			</tr>
+  		</blockTable>
+  	</section>
+  	
+	<para style="P41"><font color="white">.</font></para>
+	<para style="P41">[2] Fabrication</para>
+	<blockTable colWidths="135.0,200.0,135.0,70.0" style="Table4">
+	  	<tr>
+	  		<td><para style="P4">Activity</para></td>
+	  		<td><para style="P4">Job</para></td>
+	  		<td><para style="P4">WorkOrder No</para></td>
+	  		<td><para style="P6"><b>SqFt</b></para></td>
+	  	</tr>
+  	</blockTable>
+  	<section>
+  		<para style="P9">[[ repeatIn( get_fabrication_activity(data['form'],"Fabrication"),'fab') ]]</para>
+  		<blockTable colWidths="135.0,200.0,135.0,70.0" style="Table4">
+  			<tr>
+  				<td><para style="P61">[[ fab.type or ' ' ]]</para></td>
+  				<td><para style="P61">[[ fab.workorder_id.job_id.name or ' ' ]]</para></td>
+  				<td><para style="P61">[[ fab.workorder_id.name or ' ' ]]</para></td>
+  				<td><para style="P6">[[ fab.workorder_id.sq_ft or ' ' ]]</para></td>
+  			</tr>
+  		</blockTable>
+  	</section>
+  	
+  	<para style="P41"><font color="white">.</font></para>
+  	<para style="P41">[3] Installation</para>
+	<blockTable colWidths="135.0,200.0,135.0,70.0" style="Table4">
+	  	<tr>
+	  		<td><para style="P4">Activity</para></td>
+	  		<td><para style="P4">Job</para></td>
+	  		<td><para style="P4">WorkOrder No</para></td>
+	  		<td><para style="P6"><b>SqFt</b></para></td>
+	  	</tr>
+  	</blockTable>
+  	<section>
+  		<para style="P9">[[ repeatIn( get_installation_activity(data['form'],"Installation"),'ins') ]]</para>
+  		<blockTable colWidths="135.0,200.0,135.0,70.0" style="Table4">
+  			<tr>
+  				<td><para style="P61">[[ ins.type or ' ' ]]</para></td>
+  				<td><para style="P61">[[ ins.workorder_id.job_id.name or ' ' ]]</para></td>
+  				<td><para style="P61">[[ ins.workorder_id.name or ' ' ]]</para></td>
+  				<td><para style="P6">[[ ins.workorder_id.sq_ft or ' ' ]]</para></td>
+  			</tr>
+  		</blockTable>
+  	</section>
+  	
+  	<para style="P41"><font color="white">.</font></para>
+  	<para style="P41">[4] Others Activity</para>
+	<blockTable colWidths="135.0,200.0,135.0,70.0" style="Table4">
+	  	<tr>
+	  		<td><para style="P4">Activity</para></td>
+	  		<td><para style="P4">Job</para></td>
+	  		<td><para style="P4">WorkOrder No</para></td>
+	  		<td><para style="P6"><b>SqFt</b></para></td>
+	  	</tr>
+  	</blockTable>
+  	<section>
+  		<para style="P9">[[ repeatIn( get_others_activity(data['form']),'oth') ]]</para>
+  		<blockTable colWidths="135.0,200.0,135.0,70.0" style="Table4">
+  			<tr>
+  				<td><para style="P61">[[ oth.type or ' ' ]]</para></td>
+  				<td><para style="P61">[[ oth.workorder_id.job_id.name or ' ' ]]</para></td>
+  				<td><para style="P61">[[ oth.workorder_id.name or ' ' ]]</para></td>
+  				<td><para style="P6">[[ oth.workorder_id.sq_ft or ' ' ]]</para></td>
+  			</tr>
+  		</blockTable>
+  	</section>
+  	</pto>
+  </story>
+</document>
